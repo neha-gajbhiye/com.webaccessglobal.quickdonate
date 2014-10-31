@@ -3,11 +3,22 @@
     border-top: 1px solid #3b7840 !important;
 }
 
-.ng-dirty.ng-valid {
-    border color: #089e00 !important;
+.ng-dirty .ng-invalid:focus {
+    border-color: #b94a48 !important;
+    box-shadow: 0 0 0.5px #b94a48 !important;
 }
-.ng-dirty.ng-invalid {
-    border color: #b94a48 !important;
+
+.ng-dirty .ng-valid:focus {
+    border-color: #089e00 !important;
+    box-shadow: 0 0 0.5px #089e00 !important;
+}
+
+.ng-pristine .ng-invalid:focus {
+    box-shadow: none !important;
+}
+
+.ng-pristine .ng-valid:focus {
+    box-shadow: none !important;
 }
 
 .parsley-success {
@@ -128,11 +139,20 @@ button {
     font-size: 1.3em !important;
     margin-left: 3px !important;
     margin-top: 1em !important;
+    border: 0 none;
+    border-bottom: 2px solid #15561a;
 }
 
 button:hover {
     background: #e9bd1d;
     color: #171303 !important;
+    border-bottom: 2px solid #e9bd1d;
+}
+
+button:active {
+    background: none repeat scroll 0 0 #d8ae15;
+    top: 0px !important;
+    border-bottom: 2px solid #d8ae15;
 }
 
 .parsley-errors-list.filled {
@@ -177,7 +197,7 @@ ul.priceSet li{
     padding-left: 2.0em;
     padding-right: 2.0em;
     padding-top: 0.8em;
-    padding-bottom: 0.8em;
+    padding-bottom: 1.0em;
     text-align: center;
     border-radius: 8px;
     width: 100%;
@@ -210,7 +230,7 @@ ul.priceSet li{
     color: #3B7840 !important;
     font-size: 1.4em !important;
     line-height: 1 !important;
-    padding-bottom: 0.55em !important;
+    padding-bottom: 0.2em !important;
     padding-left: 1.2em !important;
     padding-right: 0.55em !important;
     padding-top: 0.55em !important;
@@ -258,6 +278,10 @@ ul.priceSet li{
 
 .container {
     width: 100% !important;
+}
+
+.form-control {
+    padding: 6px !important;
 }
 
 .next-icons {

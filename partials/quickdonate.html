@@ -90,15 +90,15 @@ Controller: QuickDonationCtrl
         </div>
         <div class="form-group single-input-block" ng-show="quickDonationForm.cardNumber.$valid && !quickDonationForm.cardNumber.$pristine " ng-class="{ 'has-error' : quickDonationForm.cardExpiry.$invalid && !quickDonationForm.cardExpiry.$pristine }">
           <label>Expiration Date </label>
-          <input placeholder="MM/YY" data-ng-pattern="/^[0-9]*/" type="text" ng-model="formInfo.cardExpiry" class="form-control" data-ng-minlength="5" id="card-expiration" name="cardExpiry" required data-credit-card-expiry data-parsley-errors-container=".errorBlock">
+          <input placeholder="MM/YY" data-parsley-trigger="focusout" data-ng-pattern="/^[0-9]*/" type="text" ng-model="formInfo.cardExpiry" class="form-control" data-ng-minlength="5" id="card-expiration" name="cardExpiry" required data-credit-card-expiry data-parsley-errors-container=".errorBlock">
         </div>
         <div class="form-group single-input-block" ng-class="{'has-error':quickDonationForm.securityCode.$invalid && !quickDonationForm.securityCode.$pristine}" ng-show="quickDonationForm.cardNumber.$valid && !quickDonationForm.cardNumber.$pristine ">
           <label>Security Code </label>
-          <input type="text" name="securityCode"  id="securityCode" class="form-control" ng-model="formInfo.securityCode" required data-ng-pattern="/^[0-9]+$/" data-ng-minlength="3" maxlength="3" autocomplete="off" ng-focus="selectedCardType('cvv2')" data-parsley-errors-container=".errorBlock" placeholder="CVV" data-security-code>
+          <input type="text" data-parsley-trigger="focusout" name="securityCode"  id="securityCode" class="form-control" ng-model="formInfo.securityCode" required data-ng-pattern="/^[0-9]+$/" data-ng-minlength="3" maxlength="3" autocomplete="off" ng-focus="selectedCardType('cvv2')" data-parsley-errors-container=".errorBlock" placeholder="CVV" data-security-code>
         </div>
         <div class="form-group single-input-block" ng-class="{'has-error' :quickDonationForm.zipCode.$invalid && !quickDonationForm.zipCode.$pristine}" ng-show="quickDonationForm.cardNumber.$valid && !quickDonationForm.cardNumber.$pristine ">
           <label>ZIP Code</label>
-          <input type="text" name="zip" id="zipCode" class="form-control" ng-model="formInfo.zipCode" required data-ng-pattern="/^[0-9]+$/" data-ng-length="4" autocomplete="off" data-parsley-errors-container=".errorBlock" ng-focus="selectedCardType(type)" placeholder="ZIP" />
+          <input type="text" data-parsley-trigger="focusout" name="zip" id="zipCode" class="form-control" ng-model="formInfo.zipCode" required data-ng-pattern="/^[0-9]+$/" data-ng-length="4" autocomplete="off" data-parsley-errors-container=".errorBlock" ng-focus="selectedCardType(type)" placeholder="ZIP" />
         </div>
       </div>
       <div class="payment-block direct-debit-fields-block" ng-if="directDebitType">
@@ -125,7 +125,7 @@ Controller: QuickDonationCtrl
       <div class="errorBlock">
       <p ng-show="quickDonationForm.cardNumber.$error.required && !quickDonationForm.cardNumber.$pristine || quickDonationForm.cardNumber.$error.pattern" class="help-block">Please enter a valid Card Number.</p>
       <p ng-show="quickDonationForm.securityCode.$error.required && !quickDonationForm.securityCode.$pristine || quickDonationForm.securityCode.$error.pattern" class="help-block">Please enter a valid CVV Number.</p>
-      <p ng-show="quickDonationForm.securityCode.$error.required && !quickDonationForm.securityCode.$pristine || quickDonationForm.securityCode.$error.pattern" class="help-block">Please enter a zip.</p>
+      <p ng-show="quickDonationForm.zip.$error.required && !quickDonationForm.zip.$pristine || quickDonationForm.zip.$error.pattern" class="help-block">Please enter a zip.</p>
 
 </div>
     </fieldset>
