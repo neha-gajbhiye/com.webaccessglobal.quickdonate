@@ -17,24 +17,6 @@
   quickDonation.factory('formFactory', function($q) {
     var savedData = {}
     return {
-      getUser:function(contactID) {
-        var deferred = $q.defer();
-        var resultParams = null;
-	if (contactID) {
-          CRM.api3('Contact', 'get', {
-            "sequential": 1,
-            "id": contactID,
-          }).success(function(data) {
-            $.each( data.values, function( key, value ) {
-              resultParams = value;
-            });
-            deferred.resolve(resultParams);
-          }).error(function(data, status, headers, config) {
-            deferred.reject("there was an error");
-          });
-	}
-	return deferred.promise;
-      },
       postData: function(param, isTest, creditInfo, amount) {
         var deferred = $q.defer();
         var resultParams = null;
@@ -76,6 +58,14 @@
     $scope.otherAmount = CRM.quickdonate.otherAmount;
     $scope.test = CRM.quickdonate.isTest;
     $scope.section = 1;
+    $scope.email = CRM.quickdonate.email;
+    $scope.first_name = CRM.quickdonate.first_name;
+    $scope.last_name = CRM.quickdonate.last_name;
+    $scope.zip = CRM.quickdonate.zip;
+    $scope.city = CRM.quickdonate.city;
+    $scope.state = CRM.quickdonate.state;
+    $scope.address = CRM.quickdonate.address;
+    $scope.state_province_id = CRM.quickdonate.state_province_id;
 
     //manually binds Parsley--Validation Library to this form.
     $('#quickDonationForm').parsley({
@@ -84,36 +74,31 @@
     $scope.formInfo = {}; //property is set to bind input value
     $scope.formInfo.email = formFactory.getEmail();
     $scope.formInfo.donateAmount = 0;
-
-    //get session
-    formFactory.getUser(CRM.quickdonate.sessionContact).then(function(resultParams) {
-      if (resultParams) {
-        $scope.formInfo.email = resultParams.email;
+   
+    if(CRM.quickdonate.sessionContact) {
+      if($scope.email) {
+        $scope.formInfo.email = $scope.email;
         $('#email').addClass('parsley-success');
-        if (resultParams.first_name) {
-          $scope.formInfo.user = resultParams.first_name +' '+ resultParams.last_name;
-          $('#user').addClass('parsley-success');
-        }
-        if (resultParams.street_address) {
-          $scope.formInfo.address = resultParams.street_address;
-          $('#address').addClass('parsley-success');
-        }
-        if (resultParams.postal_code) {
-          $scope.formInfo.zip = resultParams.postal_code;
-          $('#zip').addClass('parsley-success');
-          $scope.formInfo.city = resultParams.city;
-          $scope.formInfo.state = $.map(CRM.quickdonate.allStates, function(obj, index) {
-            if(obj == resultParams.state_province_id) {
-              return index;
-            }
-          });
-          $('#state').parent().show();
-          $('#state').addClass('parsley-success');
-          $('#city').parent().show();
-          $('#city').addClass('parsley-success');
-        }
       }
-    });
+      if($scope.first_name) {
+        $scope.formInfo.user = $scope.first_name +' '+ $scope.last_name;
+        $('#user').addClass('parsley-success');
+      }
+      if($scope.address) {
+        $scope.formInfo.address = $scope.address;
+        $('#address').addClass('parsley-success');
+      }
+      if($scope.zip) {
+        $scope.formInfo.zip = $scope.zip;
+        $('#zip').addClass('parsley-success');
+        $scope.formInfo.city = $scope.city;
+        $scope.formInfo.state = $scope.state;         
+        $('#state').parent().show();
+        $('#state').addClass('parsley-success');
+        $('#city').parent().show();
+        $('#city').addClass('parsley-success');
+      }
+    }
 
     $scope.hidePriceVal = true;
     $scope.amountSelected = function(price) {

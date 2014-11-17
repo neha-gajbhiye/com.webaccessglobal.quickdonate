@@ -211,6 +211,33 @@ function quickdonate_civicrm_pageRun(&$page) {
       CRM_Core_Resources::singleton()->addStyleFile('com.webaccessglobal.quickdonate',  'css/bootstrap.min.css', 103, 'page-header');
       CRM_Core_Resources::singleton()->addStyleFile('com.webaccessglobal.quickdonate',  'css/quickdonate.css', 100, 'page-body');
     }
+
+    $id = array('id' => $contactID);
+    $result = civicrm_api3('Contact', 'get', $id);
+
+    if ($contactID) {
+      $email = $result['values'][$result['id']]['email'];
+      $first_name =  $result['values'][$result['id']]['first_name'];
+      $last_name = $result['values'][$result['id']]['last_name'];
+      $street_address = $result['values'][$result['id']]['street_address'];
+      $zip = $result['values'][$result['id']]['postal_code'];
+      $city = $result['values'][$result['id']]['city'];
+      $state = $result['values'][$result['id']]['state_province'] ;
+      $state_province_id = $result['values'][$result['id']]['state_province_id'];
+      CRM_Core_Resources::singleton()->addSetting(array(
+        'quickdonate' => array(
+          'email' => $email,
+          'first_name' => $first_name,
+          'last_name' => $last_name,
+          'zip' => $zip,
+          'city' => $city,
+          'state' => $state,
+          'address' => $street_address,
+          'state_province_id' => $state_province_id,
+        ),
+      ));
+    }
+
   }
 }
 
